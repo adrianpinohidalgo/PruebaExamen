@@ -45,7 +45,6 @@ public class VentanaPrincipal extends JFrame {
 	private JLabel lblNewLabel_2;
 	private JTextField jtfInquilino;
 	private JButton btnNewButton;
-	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -167,21 +166,10 @@ public class VentanaPrincipal extends JFrame {
 				nuevo();
 			}
 		});
-
-		btnNewButton_1 = new JButton("Insertar");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				insert();
-			}
-		});
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_1.gridx = 0;
-		gbc_btnNewButton_1.gridy = 5;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 		GridBagConstraints gbc_btnInquilino = new GridBagConstraints();
+		gbc_btnInquilino.gridwidth = 2;
 		gbc_btnInquilino.insets = new Insets(0, 0, 5, 0);
-		gbc_btnInquilino.gridx = 1;
+		gbc_btnInquilino.gridx = 0;
 		gbc_btnInquilino.gridy = 5;
 		contentPane.add(btnInquilino, gbc_btnInquilino);
 
@@ -264,40 +252,37 @@ public class VentanaPrincipal extends JFrame {
 //		l.setDescripcion("Villanueva de Arriba");
 //		
 //		v.setLocalidad(l);
-		
+
 		o.setVivienda(null);
 //		o.setId(5);
 
 		this.listModelInquilino.addElement(o);
-	}
 
-	private void insert() {
-		List<Inquilino> l = new ArrayList<Inquilino>();
-		for (int i = jlistInquilino.getSelectedIndices().length - 1; i >= 0; i--) {
-			l.add(listModelInquilino.getElementAt(jlistInquilino.getSelectedIndices()[i]));
-		}
+//		List<Inquilino> l = new ArrayList<Inquilino>();
+//		for (int i = jlistInquilino.getSelectedIndices().length - 1; i >= 0; i--) {
+//			l.add(listModelInquilino.getElementAt(jlistInquilino.getSelectedIndices()[i]));
+//		}
 
 		SimpleDateFormat sfd = new SimpleDateFormat("dd/MM/yyyy");
-		for (Inquilino inquilino : l) {
-			System.out.println(inquilino.toString());
-			try {
-				if (!jtfFIni.getText().isEmpty()) {
-					inquilino.setFechaInicioAlquiler(sfd.parse(jtfFIni.getText()));
-				} else {
-					inquilino.setFechaInicioAlquiler(null);
-				}
-
-				if (!jtfFFin.getText().isEmpty()) {
-					inquilino.setFechaFinAlquiler(sfd.parse(jtfFFin.getText()));
-				} else {
-					inquilino.setFechaFinAlquiler(null);
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
+//		for (Inquilino inquilino : l) {
+//			System.out.println(inquilino.toString());
+		try {
+			if (!jtfFIni.getText().isEmpty()) {
+				o.setFechaInicioAlquiler(sfd.parse(jtfFIni.getText()));
+			} else {
+				o.setFechaInicioAlquiler(null);
 			}
 
-			InquilinoController.insert(inquilino);
+			if (!jtfFFin.getText().isEmpty()) {
+				o.setFechaFinAlquiler(sfd.parse(jtfFFin.getText()));
+			} else {
+				o.setFechaFinAlquiler(null);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
+
+		InquilinoController.insert(o);
 	}
 
 	private void eliminar() {
